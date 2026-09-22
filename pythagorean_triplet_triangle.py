@@ -19,7 +19,7 @@ side1 = float(input("Enter the length of the first side: "))
 side2 = float(input("Enter the length of the second side: "))
 side3 = float(input("Enter the length of the third side: "))
 
-# Call the function and use an if/else structure to print the result
+# Call the function and use an if/else structure to print the result--
 if is_right_angled(side1, side2, side3):
     print("\nYes, this is a right-angled triangle.")
 else:
