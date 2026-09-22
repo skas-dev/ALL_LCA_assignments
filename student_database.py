@@ -133,7 +133,7 @@ def display_records():
     print("-------------------------------")
 
 
-# --- Main Menu Loop ---
+# --- Main Menu Loop --
 
 # Pre-loading some data to test the program easily
 student_db[101] = ("Aisha Khan", "Computer Science", [85, 90, 92])
