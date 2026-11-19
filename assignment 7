@@ -1,0 +1,95 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Create the CSV file specified in the assignment
+csv_content = """Student,Maths,Python,Attendance,City
+Amit,75,80,85,Pune
+Bhavna,82,78,90,Mumbai
+Chetan,68,70,78,Pune
+Diya,90,92,95,Nashik
+Esha,72,75,80,Mumbai
+Farhan,85,88,92,Pune
+"""
+with open("sample_data_assignment_07.csv", "w") as f:
+    f.write(csv_content)
+
+# Load the CSV dataset
+df = pd.read_csv("sample_data_assignment_07.csv")
+print("Dataset:")
+print(df)
+
+# 1. Line Plot
+plt.figure(figsize=(7, 4.5))
+plt.plot(df["Student"], df["Python"], marker="o", color="blue", label="Python Marks")
+plt.title("Python Marks of Students")
+plt.xlabel("Student")
+plt.ylabel("Python Marks")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# 2. Bar Plot
+plt.figure(figsize=(7, 4.5))
+plt.bar(df["Student"], df["Maths"], color="teal", label="Maths Marks")
+plt.title("Maths Marks of Students")
+plt.xlabel("Student")
+plt.ylabel("Maths Marks")
+plt.legend()
+plt.show()
+
+# 3. Scatter Plot
+plt.figure(figsize=(7, 4.5))
+plt.scatter(df["Maths"], df["Python"], s=70, color="darkorange", label="Students")
+plt.title("Maths vs Python Marks")
+plt.xlabel("Maths Marks")
+plt.ylabel("Python Marks")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# 4. Correlation Matrix and Heatmap
+correlation = df[["Maths", "Python", "Attendance"]].corr()
+print("\nCorrelation Matrix:")
+print(correlation)
+
+plt.figure(figsize=(6.5, 5))
+sns.heatmap(correlation, annot=True, cmap="Blues", vmin=-1, vmax=1)
+plt.title("Correlation Heatmap")
+plt.show()
+
+
+# 1. Allow user to provide CSV file name as input
+filename = input("Enter the CSV filename (e.g., sample_data_assignment_07.csv): ")
+df = pd.read_csv(filename)
+
+# 2. Calculate and display averages
+print(f"\nAverage Maths Marks: {df['Maths'].mean():.2f}")
+print(f"Average Python Marks: {df['Python'].mean():.2f}")
+print(f"Average Attendance: {df['Attendance'].mean():.2f}%")
+
+# 3. Histogram of Python marks
+plt.figure(figsize=(7, 4.5))
+plt.hist(df["Python"], bins=5, color="skyblue", edgecolor="black", label="Frequency")
+plt.title("Distribution of Python Marks")
+plt.xlabel("Python Marks")
+plt.ylabel("Number of Students")
+plt.legend()
+plt.grid(axis="y", alpha=0.75)
+plt.show()
+
+# 4. Box plot for Maths and Python marks
+plt.figure(figsize=(7, 4.5))
+plt.boxplot([df["Maths"], df["Python"]], labels=["Maths", "Python"])
+plt.title("Box Plot of Maths and Python Marks")
+plt.ylabel("Marks")
+plt.grid(True)
+plt.show()
+
+# 5. Pie chart showing the number of students from each city
+city_counts = df["City"].value_counts()
+plt.figure(figsize=(6.5, 6.5))
+plt.pie(city_counts, labels=city_counts.index, autopct="%1.1f%%", startangle=140)
+plt.title("Student Distribution by City")
+plt.legend(title="Cities", loc="best")
+plt.show()
