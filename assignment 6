@@ -1,0 +1,59 @@
+import pandas as pd
+
+# Step 0: Create a sample CSV file for demonstration
+sample_data = """Student_ID,Name,Marks,City,Temp_Col
+101,Amit,85,Pune,X
+102,Bhavna,,Mumbai,Y
+103,Chetan,72,Pune,Z
+101,Amit,85,Pune,X
+104,Diya,91,,W
+105,,65,Nashik,V
+106,Farhan,88,Pune,U
+"""
+
+with open("students_data.csv", "w") as f:
+    f.write(sample_data)
+
+# 1. Load the dataset (use pd.read_excel("file.xls") for Excel files)
+df = pd.read_csv("students_data.csv")
+print("--- Original Dataset ---")
+print(df)
+
+# 2. Data Exploration
+print("\n--- First 5 Rows (head) ---")
+print(df.head())
+
+print("\n--- Dataset Info ---")
+df.info()
+
+print("\n--- Statistical Summary (describe) ---")
+print(df.describe())
+
+# 3. Handling Duplicates
+print("\n--- Duplicate Rows Check ---")
+print(df.duplicated())
+df = df.drop_duplicates()
+
+# 4. Dropping Irrelevant Columns using drop()
+df = df.drop(columns=["Temp_Col"])
+
+# 5. Handling Missing Values
+print("\n--- Missing Values Count ---")
+print(df.isnull().sum())
+
+# Fill missing 'Marks' with the mean value using fillna()
+df["Marks"] = df["Marks"].fillna(df["Marks"].mean())
+
+# Fill missing 'City' with the mode (most frequent value)
+df["City"] = df["City"].fillna(df["City"].mode()[0])
+
+# Drop rows where critical info like 'Name' is missing using dropna()
+df = df.dropna(subset=["Name"])
+
+print("\n--- Cleaned Dataset ---")
+print(df)
+
+# 6. Data Selection and Filtering using loc[]
+print("\n--- Students from Pune with Marks > 80 (using loc[]) ---")
+filtered_df = df.loc[(df["City"] == "Pune") & (df["Marks"] > 80), ["Student_ID", "Name", "Marks", "City"]]
+print(filtered_df)
